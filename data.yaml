@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['bird']
+
+roboflow:
+  workspace: jihoon-song
+  project: bird-sk7uj
+  version: 2
+  license: Public Domain
+  url: https://universe.roboflow.com/jihoon-song/bird-sk7uj/dataset/2

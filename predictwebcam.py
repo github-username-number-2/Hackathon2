@@ -1,7 +1,6 @@
 import os
 import cv2
 from ultralytics import YOLO
-import time
 
 # Path to save the output video
 video_path_out = 'output_webcam.mp4'
@@ -14,10 +13,10 @@ cap = cv2.VideoCapture(0)  # 0 for default webcam, change to other values if mul
 
 # Load the YOLO model
 model_path = os.path.join('.', 'runs', 'detect', 'train', 'weights', 'last.pt')
-model_path = "C:\\Users\\luekb\\Downloads\\birddetect\\birddetect\\best.pt"
+model_path = os.path.join('.', 'best.pt')
 model = YOLO(model_path)  # load a custom model
 
-threshold = 0.75
+threshold = 0.5
 
 while True:
     ret, frame = cap.read()
@@ -37,9 +36,7 @@ while True:
 
         if score > threshold:
             cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 4)
-            '''cv2.putText(frame, results.names[int(class_id)].upper(), (int(x1), int(y1 - 10)),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 255, 0), 3, cv2.LINE_AA)'''
-            cv2.putText(frame, "OBSTACLE", (int(x1), int(y1 - 10)),
+            cv2.putText(frame, results.names[int(class_id)].upper(), (int(x1), int(y1 - 10)),
                         cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 255, 0), 3, cv2.LINE_AA)
 
     # Write frame to output video
@@ -51,9 +48,8 @@ while True:
     # Break the loop if 'q' is pressed
     
     
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-    time.sleep(.0001)
+    '''if cv2.waitKey(1) & 0xFF == ord('q'):
+        break'''
 
 # Release the video capture and writer
 cap.release()
